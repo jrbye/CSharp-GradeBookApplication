@@ -6,6 +6,7 @@ namespace GradeBook.GradeBooks
 {
     public class RankedGradeBook:BaseGradeBook
     {
+        public string minStudentMessage = "Ranked grading requires at least 5 students with grades in order to properly calculate a student's overall grade.";
         public RankedGradeBook(string name) : base(name)
         {
             Type = GradeBookType.Ranked;
@@ -31,6 +32,28 @@ namespace GradeBook.GradeBooks
                 return 'D';
             else
                 return 'F';
+        }
+
+        public override void CalculateStatistics()
+        {
+            if (Students.Count < 5)
+            {
+                Console.WriteLine(minStudentMessage);
+                return;
+            }
+
+            base.CalculateStatistics();
+        }
+
+        public override void CalculateStudentStatistics(string name)
+        {
+            if (Students.Count < 5)
+            {
+                Console.WriteLine(minStudentMessage);
+                return;
+            }
+
+            base.CalculateStudentStatistics(name);
         }
     }
 }
